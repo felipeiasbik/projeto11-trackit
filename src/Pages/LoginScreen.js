@@ -17,6 +17,11 @@ export default function LoginScreen(){
 
 const Container = styled.div`
     width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,6 +33,8 @@ const ContainerInt = styled.div`
     justify-content: flex-start;
     align-items: center;
     gap: 6px;
+    position: fixed;
+    top: 68px;
     p {
         margin-top: 25px;
         color: #52B6FF;
