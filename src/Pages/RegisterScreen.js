@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { URL_base } from "../Components/Constants/URL_base";
 import axios from "axios";
 import Loading from "../Components/Constants/Loading";
+import { Link } from "react-router-dom";
 
 export default function RegisterScreen(){
 
@@ -26,19 +27,16 @@ export default function RegisterScreen(){
             password: namelInput
         };
 
-        axios.post(`${URL_base}/auth/sign-up1`, body)
+        axios.post(`${URL_base}/auth/sign-up`, body)
             .then(res => {
                 console.log(res);
                 navigate("/");
-                alert("Deu certo");
             })
             .catch(err => {
                 setActiveDisabled(false);
-                console.log(body);
-                console.log(err.response);
-                alert(`Erro ${err.response.status} - ${err.response.data.details !== undefined ? err.response.data.details : err.response.data}`);
+                alert(`Erro ${err.response.status} - ${err.response.data.message}`);
+                console.log(err)
             });
-    
     }
 
     return (
@@ -50,11 +48,11 @@ export default function RegisterScreen(){
                     <input type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
                     <input type="text" placeholder="nome" value={namelInput} onChange={e => setNameInput(e.target.value)} required/>
                     <input type="text" placeholder="foto" value={pictureInput} onChange={e => setPictureInput(e.target.value)} required/>
-                    <button disabled={activeDisabled}>
+                    <ButtonSubmit disabled={activeDisabled}>
                         {activeDisabled === true ? <Loading /> : "Cadastrar"}
-                    </button>
-                    <p>Já tem uma conta? Faça login!</p>
+                    </ButtonSubmit>
                 </form>
+                <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
             </ContainerInt>
         </Container>
     )
@@ -96,4 +94,7 @@ const ContainerInt = styled.div`
         align-items: center;
         gap: 6px;
     }
+`
+const ButtonSubmit = styled.button`
+    opacity: ${props => props.disabled === false ? 1 : 0.7 };
 `
