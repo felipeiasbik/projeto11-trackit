@@ -1,24 +1,38 @@
 import styled from "styled-components";
 import { CircularProgressbar } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
+import { Link } from "react-router-dom";
 
 export default function Footer(){
+
     return (
         <Button>
-            <Menu valor={"habitos"}>Hábitos</Menu>
-            <Center><CircularProgressbar value="65" text="Hoje" styles={
-                {
-                path:{stroke: "#ffffff"},
-                trail: 
-                    {stroke: "#52B6FF"},
-                text: 
-                    {fill: "#ffffff", 
-                    fontSize: "22px", 
-                    fontFamily: 'Lexend Deca', 
-                    fontWeight: "400"}}
-                }
-                /></Center>
-            <Menu>Histórico</Menu>
+            <Menu valor={"habitos"}>
+                <Link to="/habitos">
+                    <p>Hábitos</p>
+                </Link>
+            </Menu>
+            <Center>
+                <Link to="/hoje">
+                    <CircularProgressbar value="65" text="Hoje" styles={
+                    {
+                    path:{stroke: "#ffffff"},
+                    trail: 
+                        {stroke: "#52B6FF"},
+                    text: 
+                        {fill: "#ffffff", 
+                        fontSize: "22px", 
+                        fontFamily: 'Lexend Deca', 
+                        fontWeight: "400"}}
+                    }
+                    />
+                </Link>
+            </Center>
+            <Menu>
+                <Link to="/historico">
+                    <p>Histórico</p>
+                </Link>
+            </Menu>
         </Button>
     )
 }
@@ -41,13 +55,14 @@ const Menu = styled.div`
     width: 100px;
     display: flex;
     justify-content: ${props => (props.valor === "habitos" ? "flex-start" : "flex-end")};
-    color: #52B6FF;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 22px;
+    p{
+        color: #52B6FF;
+        font-family: 'Lexend Deca', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 22px;
+    }
 `
-
 const Center = styled.div`
     width: 91px;
     height: 91px;

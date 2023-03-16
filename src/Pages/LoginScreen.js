@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import LogoLoginRegister from "../Components/LogoLoginRegister";
 import { URL_base } from "../Components/Constants/URL_base";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Components/Constants/Loading";
+import MyContext from "../context/MyContext";
 
 export default function LoginScreen(){
 
@@ -13,19 +14,17 @@ export default function LoginScreen(){
     const [passInput,setPassInput] = useState("");
     const [activeDisabled,setActiveDisabled] = useState(false);
     const navigate = useNavigate();
+    const {setLoginOk} = useContext(MyContext);
 
     function loginUser(e){
         e.preventDefault();
         setActiveDisabled(true);
 
-        const body = {
-            email: emailInput,
-	        password: passInput
-        };
+        const body = { email: emailInput, password: passInput};
 
         axios.post(`${URL_base}/auth/login`, body)
             .then(res => {
-                console.log(res.data);
+                setLoginOk(res.data);
                 navigate("/hoje");
             })
             .catch(err => {

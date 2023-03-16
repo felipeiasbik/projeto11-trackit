@@ -48,7 +48,7 @@ export default function Today(){
 }
 
 const Container = styled.div`
-    margin: 98px 18px;
+    margin: 98px 18px 118px 18px;
     box-sizing: border-box;
 `
 const DayDate = styled.div`

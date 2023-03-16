@@ -1,10 +1,15 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import MyContext from "../context/MyContext";
 
 export default function Header(){
+
+    const {loginOk} = useContext(MyContext);
+
     return (
         <Top>
             <h1>TrackIt</h1>
-            <img src="https://yt3.googleusercontent.com/ytc/AL5GRJWF9DhK1icziCNSd-0dyRCDbOU3_op5GLtFSJo0WA=s900-c-k-c0x00ffffff-no-rj" alt="Foto do Perfil do Usuário" />
+            <img src={loginOk.image} alt="Foto do Perfil do Usuário" />
         </Top>
     )
 }
@@ -33,6 +38,7 @@ const Top = styled.div`
     img {
         width: 51px;
         height: 51px;
+	    object-fit: cover;
         border-radius: 50%;
     }
 `
