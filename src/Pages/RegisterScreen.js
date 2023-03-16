@@ -2,9 +2,9 @@ import styled from "styled-components";
 import LogoLoginRegister from "../Components/LogoLoginRegister";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { URL_base } from "../Components/Constants/URL_base";
+import { URL_base } from "../Constants/URL_base";
 import axios from "axios";
-import Loading from "../Components/Constants/Loading";
+import Loading from "../Constants/Loading";
 import { Link } from "react-router-dom";
 
 export default function RegisterScreen(){

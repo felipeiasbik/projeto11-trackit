@@ -1,8 +1,36 @@
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import styled from "styled-components";
+import { useEffect,useState } from "react";
+import axios from "axios";
+import { URL_base } from "../Constants/URL_base";
+import HabitsDays from "../Components/HabitsDays";
 
 export default function Habits(){
+
+    const [montaHabito,setMontaHabito] = useState({name: "", days: []});
+    const [dias,setDias] = useState([]);
+
+    useEffect(() => {
+        console.log(dias)
+    },[dias]);
+
+    function postHabit(e){
+
+        // e.preventDefault();
+
+        // const config = {...montaHabito};
+
+        // axios.post(`${URL_base}/habits`, config)
+        //     .then(res => {
+        //         console.log(res);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+    }
+
+
     return (
         <>
         <Header />
@@ -12,20 +40,16 @@ export default function Habits(){
                     <button>+</button>
                 </MyHabits>
                 <FrameAddHabit>
-                    <input type="text" placeholder="nome do hábito" required/>
-                    <Dias>
-                        <button type="button">D</button>
-                        <button type="button">S</button>
-                        <button type="button">T</button>
-                        <button type="button">Q</button>
-                        <button type="button">Q</button>
-                        <button type="button">S</button>
-                        <button type="button">S</button>
-                    </Dias>
-                    <BottomFrame>
-                        <Cancel type="reset">Cancelar</Cancel>
-                        <Submit type="submit">Salvar</Submit>
-                    </BottomFrame>
+                    <form onSubmit={postHabit}>
+                        <input type="text" placeholder="nome do hábito" required/>
+                        <Dias>
+                            <HabitsDays dias={dias} setDias={setDias}/>
+                        </Dias>
+                        <BottomFrame>
+                            <Cancel type="reset">Cancelar</Cancel>
+                            <Submit type="submit">Salvar</Submit>
+                        </BottomFrame>
+                    </form>
                 </FrameAddHabit>
                 {/* <FrameFixed>
                     <p>Ler um capítulo de livro</p>
@@ -96,23 +120,6 @@ const Dias = styled.div`
     gap: 4px;
     width: 234px;
     margin-top: 8px;
-    button {
-        background-color: #ffffff;
-        border: 1px solid #D4D4D4;
-        width: 30px;
-        height: 30px;
-        padding: 3px;
-        box-sizing: border-box;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #DBDBDB;
-        font-family: 'Lexend Deca', sans-serif;
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 25px;
-    }
 `
 const BottomFrame = styled.div`
     display: flex;

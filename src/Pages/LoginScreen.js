@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import LogoLoginRegister from "../Components/LogoLoginRegister";
-import { URL_base } from "../Components/Constants/URL_base";
+import { URL_base } from "../Constants/URL_base";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Loading from "../Components/Constants/Loading";
+import Loading from "../Constants/Loading";
 import MyContext from "../context/MyContext";
 
 export default function LoginScreen(){
