@@ -2,8 +2,9 @@ import styled from "styled-components";
 import LogoLoginRegister from "../Components/LogoLoginRegister";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { URL } from "../Components/Constants/URL";
+import { URL_base } from "../Components/Constants/URL_base";
 import axios from "axios";
+import Loading from "../Components/Constants/Loading";
 
 export default function RegisterScreen(){
 
@@ -11,10 +12,12 @@ export default function RegisterScreen(){
     const [passInput,setPassInput] = useState("");
     const [namelInput,setNameInput] = useState("");
     const [pictureInput,setPictureInput] = useState("");
+    const [activeDisabled,setActiveDisabled] = useState(false);
     const navigate = useNavigate();
 
     function registerUser(e){
         e.preventDefault();
+        setActiveDisabled(true);
 
         const body = {
             email: emailInput,
@@ -23,17 +26,19 @@ export default function RegisterScreen(){
             password: namelInput
         };
 
-        axios.post(`${URL}/auth/sign-up`, body)
+        axios.post(`${URL_base}/auth/sign-up1`, body)
             .then(res => {
                 console.log(res);
-                navigate("/hoje");
+                navigate("/");
                 alert("Deu certo");
             })
             .catch(err => {
+                setActiveDisabled(false);
                 console.log(body);
                 console.log(err.response);
-                alert("Deu erro");
+                alert(`Erro ${err.response.status} - ${err.response.data.details !== undefined ? err.response.data.details : err.response.data}`);
             });
+    
     }
 
     return (
@@ -45,7 +50,9 @@ export default function RegisterScreen(){
                     <input type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
                     <input type="text" placeholder="nome" value={namelInput} onChange={e => setNameInput(e.target.value)} required/>
                     <input type="text" placeholder="foto" value={pictureInput} onChange={e => setPictureInput(e.target.value)} required/>
-                    <button>Cadastrar</button>
+                    <button disabled={activeDisabled}>
+                        {activeDisabled === true ? <Loading /> : "Cadastrar"}
+                    </button>
                     <p>Já tem uma conta? Faça login!</p>
                 </form>
             </ContainerInt>
