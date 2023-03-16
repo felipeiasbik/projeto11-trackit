@@ -7,7 +7,7 @@ export default function Header(){
     const {loginOk} = useContext(MyContext);
 
     return (
-        <Top>
+        <Top data-test="header">
             <h1>TrackIt</h1>
             <img src={loginOk.image} alt="Foto do Perfil do Usuário" />
         </Top>

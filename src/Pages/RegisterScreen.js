@@ -44,15 +44,15 @@ export default function RegisterScreen(){
             <ContainerInt>
                 <LogoLoginRegister />
                 <form onSubmit={registerUser}>
-                    <input type="email" placeholder="email" value={emailInput} onChange={e => setEmailInput(e.target.value)} required/>
-                    <input type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
-                    <input type="text" placeholder="nome" value={namelInput} onChange={e => setNameInput(e.target.value)} required/>
-                    <input type="text" placeholder="foto" value={pictureInput} onChange={e => setPictureInput(e.target.value)} required/>
-                    <ButtonSubmit disabled={activeDisabled}>
+                    <input data-test="email-input" type="email" placeholder="email" value={emailInput} onChange={e => setEmailInput(e.target.value)} required/>
+                    <input data-test="password-input" type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
+                    <input data-test="user-name-input" type="text" placeholder="nome" value={namelInput} onChange={e => setNameInput(e.target.value)} required/>
+                    <input data-test="user-image-input" type="text" placeholder="foto" value={pictureInput} onChange={e => setPictureInput(e.target.value)} required/>
+                    <ButtonSubmit data-test="signup-btn" disabled={activeDisabled}>
                         {activeDisabled === true ? <Loading /> : "Cadastrar"}
                     </ButtonSubmit>
                 </form>
-                <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+                <Link data-test="login-link" to="/"><p>Já tem uma conta? Faça login!</p></Link>
             </ContainerInt>
         </Container>
     )

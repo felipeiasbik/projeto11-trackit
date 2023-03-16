@@ -34,46 +34,52 @@ export default function Habits(){
     return (
         <>
         <Header />
-            <Container>
+            <Container data-test="habit-create-container">
                 <MyHabits>
                     <p>Meus hábitos</p>
-                    <button>+</button>
+                    <button data-test="habit-create-btn">+</button>
                 </MyHabits>
                 <FrameAddHabit>
                     <form onSubmit={postHabit}>
-                        <input type="text" placeholder="nome do hábito" required/>
+                        <input data-test="habit-name-input" type="text" placeholder="nome do hábito" required/>
                         <Dias>
                             <HabitsDays dias={dias} setDias={setDias}/>
                         </Dias>
                         <BottomFrame>
-                            <Cancel type="reset">Cancelar</Cancel>
-                            <Submit type="submit">Salvar</Submit>
+                            <Cancel data-test="habit-create-cancel-btn" type="reset">Cancelar</Cancel>
+                            <Submit data-test="habit-create-save-btn" type="submit">Salvar</Submit>
                         </BottomFrame>
                     </form>
                 </FrameAddHabit>
-                {/* <FrameFixed>
-                    <p>Ler um capítulo de livro</p>
-                    <ion-icon name="trash-outline"></ion-icon>
+            </Container>
+            {/* <ContainerFrame data-test="habit-container">
+                <FrameFixed>
+                    <p data-test="habit-name">Ler um capítulo de livro</p>
+                    <ion-icon name="trash-outline" data-test="habit-delete-btn"></ion-icon>
                     <Dias>
-                        <button type="button">D</button>
-                        <button type="button">S</button>
-                        <button type="button">T</button>
-                        <button type="button">Q</button>
-                        <button type="button">Q</button>
-                        <button type="button">S</button>
-                        <button type="button">S</button>
+                        <button data-test="habit-day" type="button">D</button>
+                        <button data-test="habit-day" type="button">S</button>
+                        <button data-test="habit-day" type="button">T</button>
+                        <button data-test="habit-day" type="button">Q</button>
+                        <button data-test="habit-day" type="button">Q</button>
+                        <button data-test="habit-day" type="button">S</button>
+                        <button data-test="habit-day" type="button">S</button>
                     </Dias>
-                </FrameFixed> */}
+                </FrameFixed>
                 <InterArea>
                     Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </InterArea>
-            </Container>
+            </ContainerFrame> */}
         <Footer />
         </>
     )
 }
 
 const Container = styled.div`
+    margin: 98px 18px;
+    box-sizing: border-box;
+`
+const ContainerFrame = styled.div`
     margin: 98px 18px;
     box-sizing: border-box;
 `

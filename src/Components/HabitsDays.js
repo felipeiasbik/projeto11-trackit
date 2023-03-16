@@ -18,6 +18,7 @@ export default function HabitsDays( {dias, setDias} ){
 
             return (
             <ButtonDay 
+                data-test="habit-day"
                 key={indice} 
                 type="button"
                 cor={dias.includes(indice) ? true : false}

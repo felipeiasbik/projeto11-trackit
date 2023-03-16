@@ -8,36 +8,36 @@ export default function Today(){
             <Header />
             <Container>
                 <DayDate>
-                    <h2>Segunda, 17/05</h2>
-                    <p>Nenhum hábito concluído ainda</p>
+                    <h2 data-test="today">Segunda, 17/05</h2>
+                    <p data-test="today-counter">Nenhum hábito concluído ainda</p>
                 </DayDate>
-                <HabitToday>
+                <HabitToday data-test="today-habit-container">
                     <Texts>
-                        <h2>Ler 1 capítulo de livro</h2>
-                        <p>Sequência atual: 3 dias</p>
-                        <p>Seu recorde: 5 dias</p>         
+                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
+                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
+                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
                     </Texts>
-                    <Check>
+                    <Check data-test="today-habit-check-btn">
                         <ion-icon name="checkmark"></ion-icon>
                     </Check>
                 </HabitToday>
                 <HabitToday>
                     <Texts>
-                        <h2>Ler 1 capítulo de livro</h2>
-                        <p>Sequência atual: 3 dias</p>
-                        <p>Seu recorde: 5 dias</p>         
+                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
+                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
+                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
                     </Texts>
-                    <Check>
+                    <Check data-test="today-habit-check-btn">
                         <ion-icon name="checkmark"></ion-icon>
                     </Check>
                 </HabitToday>
                 <HabitToday>
                     <Texts>
-                        <h2>Ler 1 capítulo de livro</h2>
-                        <p>Sequência atual: 3 dias</p>
-                        <p>Seu recorde: 5 dias</p>         
+                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
+                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
+                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
                     </Texts>
-                    <Check>
+                    <Check data-test="today-habit-check-btn">
                         <ion-icon name="checkmark"></ion-icon>
                     </Check>
                 </HabitToday>
@@ -95,7 +95,7 @@ const Texts = styled.div`
         line-height: 16px;
     }
 `
-const Check = styled.div`
+const Check = styled.button`
     background-color: #EBEBEB;
     width: 69px;
     height: 69px;

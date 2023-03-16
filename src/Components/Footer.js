@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 export default function Footer(){
 
     return (
-        <Button>
+        <Bottom data-test="menu">
             <Menu valor={"habitos"}>
-                <Link to="/habitos">
+                <Link data-test="menu" to="/habitos">
                     <p>Hábitos</p>
                 </Link>
             </Menu>
             <Center>
                 <Link to="/hoje">
-                    <CircularProgressbar value="65" text="Hoje" styles={
+                    <CircularProgressbar data-test="menu" value="65" text="Hoje" styles={
                     {
                     path:{stroke: "#ffffff"},
                     trail: 
@@ -29,15 +29,15 @@ export default function Footer(){
                 </Link>
             </Center>
             <Menu>
-                <Link to="/historico">
+                <Link data-test="history-link" to="/historico">
                     <p>Histórico</p>
                 </Link>
             </Menu>
-        </Button>
+        </Bottom>
     )
 }
 
-const Button = styled.div`
+const Bottom = styled.div`
     margin-top: 200px;
     width: 100%;
     height: 70px;

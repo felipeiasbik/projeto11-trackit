@@ -40,13 +40,13 @@ export default function LoginScreen(){
             <ContainerInt>
                 <LogoLoginRegister />
                 <form onSubmit={loginUser}>
-                    <input type="email" placeholder="email" value={emailInput} onChange={e => setEmailInput(e.target.value)} required/>
-                    <input type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
-                    <ButtonSubmit disabled={activeDisabled}>
+                    <input data-test="email-input" type="email" placeholder="email" value={emailInput} onChange={e => setEmailInput(e.target.value)} required/>
+                    <input data-test="password-input" type="password" placeholder="senha" value={passInput} onChange={e => setPassInput(e.target.value)} required/>
+                    <ButtonSubmit data-test="login-btn" disabled={activeDisabled}>
                         {activeDisabled === true ? <Loading /> : "Entrar"}
                     </ButtonSubmit>
                 </form>
-                <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>
+                <Link data-test="signup-link" to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>
             </ContainerInt>
         </Container>
     )
