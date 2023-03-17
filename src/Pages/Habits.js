@@ -1,109 +1,128 @@
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import styled from "styled-components";
-import { useEffect,useState } from "react";
+import { useEffect,useState, useContext } from "react";
 import axios from "axios";
 import { URL_base } from "../Constants/URL_base";
 import HabitsDays from "../Components/HabitsDays";
+import MyContext from "../context/MyContext";
+import MyHabits from "../Components/MyHabits";
+import DisplayHabits from "../Components/DisplayHabits";
 
 export default function Habits(){
 
-    const [montaHabito,setMontaHabito] = useState({name: "", days: []});
     const [dias,setDias] = useState([]);
+    const [exibeTela,setExibeTela] = useState();
+    const [habitos,setHabitos] = useState([]);
+    const [nomeHabitoInput,setNomeHabitoInput] = useState("");
+    const [activeDisabled,setActiveDisabled] = useState(false);
+    const [rodar,setRodar] = useState(0);
+    const {loginOk} = useContext(MyContext);
 
     useEffect(() => {
-        console.log(dias)
-    },[dias]);
+        const token = loginOk.token;
+        const config = {
+            headers: {Authorization: `Bearer ${token}`}
+        }
+        axios.get(`${URL_base}/habits`, config)
+            .then(res => {
+                const valor = res.data;
+                setHabitos(valor);
+                console.log(valor);
+                if (res.data.length > 0){
+                    setExibeTela(2);
+                } else if (res.data.length === 0){
+                    setExibeTela(0);
+                }
+            })
+            .catch(err => {
+                alert(err.response.data.message);
+            })
+    },[rodar]);
 
     function postHabit(e){
 
-        // e.preventDefault();
+        e.preventDefault();
+        
+        setActiveDisabled(true);
 
-        // const config = {...montaHabito};
+        const token = loginOk.token;
+        const body = {name: nomeHabitoInput, days: dias};
+        const config = {
+            headers: {Authorization: `Bearer ${token}`}
+        }
 
-        // axios.post(`${URL_base}/habits`, config)
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
+        axios.post(`${URL_base}/habits`, body, config)
+            .then(res => {
+                console.log(res.data);
+                setExibeTela(2);
+                setNomeHabitoInput("");
+                setDias([]);
+                setRodar(rodar+1);
+                setActiveDisabled(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setActiveDisabled(false);
+            });
     }
-
 
     return (
         <>
         <Header />
-            <Container data-test="habit-create-container">
-                <MyHabits>
-                    <p>Meus hábitos</p>
-                    <button data-test="habit-create-btn">+</button>
-                </MyHabits>
-                <FrameAddHabit>
-                    <form onSubmit={postHabit}>
-                        <input data-test="habit-name-input" type="text" placeholder="nome do hábito" required/>
-                        <Dias>
-                            <HabitsDays dias={dias} setDias={setDias}/>
-                        </Dias>
-                        <BottomFrame>
-                            <Cancel data-test="habit-create-cancel-btn" type="reset">Cancelar</Cancel>
-                            <Submit data-test="habit-create-save-btn" type="submit">Salvar</Submit>
-                        </BottomFrame>
-                    </form>
-                </FrameAddHabit>
-            </Container>
-            {/* <ContainerFrame data-test="habit-container">
-                <FrameFixed>
-                    <p data-test="habit-name">Ler um capítulo de livro</p>
-                    <ion-icon name="trash-outline" data-test="habit-delete-btn"></ion-icon>
-                    <Dias>
-                        <button data-test="habit-day" type="button">D</button>
-                        <button data-test="habit-day" type="button">S</button>
-                        <button data-test="habit-day" type="button">T</button>
-                        <button data-test="habit-day" type="button">Q</button>
-                        <button data-test="habit-day" type="button">Q</button>
-                        <button data-test="habit-day" type="button">S</button>
-                        <button data-test="habit-day" type="button">S</button>
-                    </Dias>
-                </FrameFixed>
-                <InterArea>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                </InterArea>
-            </ContainerFrame> */}
+            <ContainerExterno>
+                <MyHabits setExibeTela={setExibeTela} habitos={habitos}/>
+                <CriaHabito exibeTela={exibeTela} data-test="habit-create-container">
+                    <FrameAddHabit>
+                        <form onSubmit={postHabit}>
+                            <input disabled={activeDisabled} data-test="habit-name-input" type="text" placeholder="nome do hábito" value={nomeHabitoInput} onChange={e => setNomeHabitoInput(e.target.value)} required/>
+                            <Dias>
+                                <HabitsDays dias={dias} setDias={setDias}/>
+                            </Dias>
+                            <BottomFrame>
+                                <Cancel disabled={activeDisabled} 
+                                data-test="habit-create-cancel-btn" 
+                                type="reset" 
+                                onClick={() => {
+                                    if (habitos.length === 0){
+                                        setExibeTela(0);
+                                    } else {
+                                        setExibeTela(2);
+                                    }
+                                    }}>
+                                Cancelar
+                                </Cancel>
+                                <Submit disabled={activeDisabled} data-test="habit-create-save-btn" type="submit">Salvar</Submit>
+                            </BottomFrame>
+                        </form>
+                    </FrameAddHabit>
+                </CriaHabito>
+                <MostraHabito exibeTela={exibeTela} data-test="habit-container">
+                    <DisplayHabits habitos={habitos} rodar={rodar} setRodar={setRodar}/>                    
+                </MostraHabito>
+                <MensagemHabito exibeTela={exibeTela}>
+                    <InterArea>
+                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                    </InterArea>
+                </MensagemHabito>
+            </ContainerExterno>
         <Footer />
         </>
     )
 }
 
-const Container = styled.div`
+const CriaHabito = styled.div`
+    display: ${props => props.exibeTela === 1 || props.exibeTela === 3 ? "block" : "none"};
+`
+const MostraHabito = styled.div`
+    display: ${props => props.exibeTela === 2 ? "block" : "none"};
+`
+const MensagemHabito = styled.div`
+    display: ${props => props.exibeTela === 0 || props.exibeTela === 3 ? "block" : "none"};
+`
+const ContainerExterno = styled.div`
     margin: 98px 18px;
     box-sizing: border-box;
-`
-const ContainerFrame = styled.div`
-    margin: 98px 18px;
-    box-sizing: border-box;
-`
-const MyHabits = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    p {
-        color: #126BA5;
-        font-family: 'Lexend Deca', sans-serif;
-        font-size: 23px;
-        font-weight: 400;
-        line-height: 28px;
-    }
-    button {
-        width: 40px;
-        height: 35px;
-        font-family: 'Lexend Deca', sans-serif;
-        font-size: 27px;
-        font-weight: 400;
-        line-height: 33px;
-    }
 `
 const FrameAddHabit = styled.div`
     width: 100%;
@@ -147,27 +166,4 @@ const Cancel = styled.button`
 `
 const Submit =styled.button`
     color: #ffffff;
-`
-const FrameFixed = styled.div`
-    position: relative;
-    background-color: #ffffff;
-    width: 100%;    
-    border-radius: 5px;
-    padding: 16px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    p {
-        color: #666666;
-        font-family: 'Lexend Deca', sans-serif;
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 25px;
-    }
-    ion-icon {
-        font-size:20px;
-        color: #666666;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-    }
 `

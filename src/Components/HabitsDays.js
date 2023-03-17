@@ -41,7 +41,7 @@ const ButtonDay = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #DBDBDB;
+    color: ${props => props.cor === false ? "#DBDBDB" : "#ffffff"};
     font-family: 'Lexend Deca', sans-serif;
     font-size: 20px;
     font-weight: 400;
