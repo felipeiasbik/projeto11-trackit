@@ -22,9 +22,9 @@ export default function RegisterScreen(){
 
         const body = {
             email: emailInput,
-            name: passInput,
+            name: namelInput,
             image: pictureInput,
-            password: namelInput
+            password: passInput
         };
 
         axios.post(`${URL_base}/auth/sign-up`, body)

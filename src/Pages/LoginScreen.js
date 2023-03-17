@@ -26,6 +26,8 @@ export default function LoginScreen(){
             .then(res => {
                 setLoginOk(res.data);
                 navigate("/hoje");
+                console.log(res)
+                console.log(body)
             })
             .catch(err => {
                 setActiveDisabled(false);
