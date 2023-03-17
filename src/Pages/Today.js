@@ -1,46 +1,61 @@
 import styled from "styled-components";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { URL_base } from "../Constants/URL_base";
+import {MyContext} from "../context/MyContext";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 
 export default function Today(){
+
+
+    const [habitos,setHabitos] = useState([]);
+    const {loginOk} = useContext(MyContext);
+
+
+    useEffect(() => {
+        
+        const config = {
+            headers: {Authorization: `Bearer ${loginOk.token}`}
+        }
+
+        axios
+            .get(`${URL_base}/habits/today`, config)
+            .then (res => {
+                const valor = res.data;
+                setHabitos(valor)
+                console.log(res)
+            })
+            .catch (err => alert(err.response.data.message))
+
+
+    },[]);
+
     return (
         <>
             <Header />
             <Container>
                 <DayDate>
-                    <h2 data-test="today">Segunda, 17/05</h2>
+                    <h2 data-test="today">{(dayjs().locale("pt-br").format("dddd")[0].toUpperCase(0) + dayjs().locale("pt-br").format("dddd").substring(1)).replace("-feira","")}, {dayjs().format('DD/MM')}</h2>
                     <p data-test="today-counter">Nenhum hábito concluído ainda</p>
                 </DayDate>
-                <HabitToday data-test="today-habit-container">
-                    <Texts>
-                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
-                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
-                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
-                    </Texts>
-                    <Check data-test="today-habit-check-btn">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </Check>
-                </HabitToday>
-                <HabitToday>
-                    <Texts>
-                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
-                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
-                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
-                    </Texts>
-                    <Check data-test="today-habit-check-btn">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </Check>
-                </HabitToday>
-                <HabitToday>
-                    <Texts>
-                        <h2 data-test="today-habit-name" >Ler 1 capítulo de livro</h2>
-                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
-                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
-                    </Texts>
-                    <Check data-test="today-habit-check-btn">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </Check>
-                </HabitToday>
+                {habitos.map( hab => {
+
+                    return (
+                        <HabitToday key={hab.id} data-test="today-habit-container">
+                            <Texts>
+                                <h2 data-test="today-habit-name" >{hab.name}</h2>
+                                <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
+                                <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
+                            </Texts>
+                            <Check data-test="today-habit-check-btn">
+                                <ion-icon name="checkmark"></ion-icon>
+                            </Check>
+                        </HabitToday>
+                    )
+                })}
             </Container>
             <Footer />
         </>

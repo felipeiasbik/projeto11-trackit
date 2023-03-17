@@ -5,7 +5,7 @@ import { useEffect,useState, useContext } from "react";
 import axios from "axios";
 import { URL_base } from "../Constants/URL_base";
 import HabitsDays from "../Components/HabitsDays";
-import MyContext from "../context/MyContext";
+import {MyContext} from "../context/MyContext";
 import MyHabits from "../Components/MyHabits";
 import DisplayHabits from "../Components/DisplayHabits";
 
@@ -77,7 +77,7 @@ export default function Habits(){
                         <form onSubmit={postHabit}>
                             <input disabled={activeDisabled} data-test="habit-name-input" type="text" placeholder="nome do hábito" value={nomeHabitoInput} onChange={e => setNomeHabitoInput(e.target.value)} required/>
                             <Dias>
-                                <HabitsDays dias={dias} setDias={setDias}/>
+                                <HabitsDays dias={dias} setDias={setDias} activeDisabled={activeDisabled}/>
                             </Dias>
                             <BottomFrame>
                                 <Cancel disabled={activeDisabled} 

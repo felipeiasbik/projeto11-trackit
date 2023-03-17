@@ -1,7 +1,7 @@
 import DiasSemana from "../Constants/DiasSemana";
 import styled from "styled-components";
 
-export default function HabitsDays( {dias, setDias} ){
+export default function HabitsDays( {dias, setDias, activeDisabled} ){
 
     return (
         DiasSemana.map( (diaSigla, indice) => {
@@ -22,7 +22,8 @@ export default function HabitsDays( {dias, setDias} ){
                 key={indice} 
                 type="button"
                 cor={dias.includes(indice) ? true : false}
-                onClick={() => selecionarDias()}>
+                onClick={() => selecionarDias()}
+                disabled={activeDisabled}>
                 {diaSigla}
             </ButtonDay>
             )

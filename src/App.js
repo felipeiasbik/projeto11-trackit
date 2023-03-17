@@ -4,7 +4,7 @@ import Habits from "./Pages/Habits";
 import Today from "./Pages/Today";
 import History from "./Pages/History";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MyContext from "./context/MyContext";
+import {MyContext} from "./context/MyContext";
 import { useState } from "react";
 
 export default function App() {

@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Constants/Loading";
-import MyContext from "../context/MyContext";
+import {MyContext} from "../context/MyContext";
 
 export default function LoginScreen(){
 

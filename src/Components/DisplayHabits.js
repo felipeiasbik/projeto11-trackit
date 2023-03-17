@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { URL_base } from "../Constants/URL_base";
 import axios from "axios";
 import { useContext } from "react";
-import MyContext from "../context/MyContext";
+import {MyContext} from "../context/MyContext";
 
 export default function DisplayHabits( {habitos, rodar, setRodar} ){
 
