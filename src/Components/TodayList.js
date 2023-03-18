@@ -10,7 +10,7 @@ export default function TodayList( {habitos, rodar, setRodar} ){
     const [habAtual,setHabAtual] = useState("");
     const [activeDisabled,setActiveDisabled] = useState(false);
     const {loginOk} = useContext(MyContext);
-    const {progress, setProgress} = useContext(HabitsContext);
+    const {setProgress} = useContext(HabitsContext);
 
     console.log(habitos)
 
@@ -27,11 +27,8 @@ export default function TodayList( {habitos, rodar, setRodar} ){
 
             function checkHabito(){
 
-                setHabAtual(hab.id);
-
-                if(activeDisabled === false){
-                    setActiveDisabled(true);
-                }
+                setHabAtual([...habAtual,hab.id]);
+                setActiveDisabled(true);
 
                 if (hab.done === false){
 
@@ -45,9 +42,9 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         .post(`${URL_base}/habits/${hab.id}/check`, body, config)
                         .then (res => {
                             console.log(res.data);
-                            setRodar(rodar + 1);
                             setActiveDisabled(false);
-                            setHabAtual("");
+                            setHabAtual([]);
+                            setRodar(rodar + 1);
                         })
                         .catch(err => {
                             alert(err.response.data.message)
@@ -66,12 +63,13 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         .post(`${URL_base}/habits/${hab.id}/uncheck`, body, config)
                         .then (res => {
                             console.log(res.data);
+                            setTimeout(setActiveDisabled(false), 5000);
+                            setHabAtual([]);
                             setRodar(rodar + 1);
-                            setActiveDisabled(false);
-                            setHabAtual("");
                         })
                         .catch(err => {
-                            alert(err.response.data.message)
+                            alert(err.response.data.message);
+                            setActiveDisabled(false);
                         })
                 }
             }
@@ -83,8 +81,8 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         <p data-test="today-habit-sequence">Sequência atual: <SequenciaSpan currentSequence={hab.currentSequence} >{hab.currentSequence} {hab.currentSequence > 1 ? "dias" :  hab.currentSequence === 0 ? "" : "dia"}</SequenciaSpan></p>
                         <p data-test="today-habit-record">Seu recorde: <SequenciaRecordeSpan currentSequence={hab.currentSequence} highestSequence={hab.highestSequence}>{hab.highestSequence} {hab.highestSequence > 1 ? "dias" : hab.highestSequence === 0 ? "" : "dia"}</SequenciaRecordeSpan></p>         
                     </Texts>
-                    <Check disabled={activeDisabled} cor={hab.done} onClick={() => checkHabito()} data-test="today-habit-check-btn">
-                        {activeDisabled === true && hab.id === habAtual ? <Loading /> : <ion-icon name="checkmark"></ion-icon>}
+                    <Check disabled={habAtual.includes(hab.id) && activeDisabled} cor={hab.done} onClick={() => checkHabito()} data-test="today-habit-check-btn">
+                        {activeDisabled === true && habAtual.includes(hab.id) ? <Loading /> : <ion-icon name="checkmark"></ion-icon>}
                         
                     </Check>
                 </HabitToday>
@@ -120,7 +118,7 @@ p {
 }
 `
 const Check = styled.button`
-    background-color: ${props => props.cor === true ? "#8FC549" : "#E7E7E7"};
+    background-color: ${props => props.cor === true && props.disabled === false ? "#8FC549" : props.cor === false && props.disabled === false ? "#E7E7E7" : "#333333"};
     width: 69px;
     height: 69px;
     box-sizing: border-box;
@@ -129,7 +127,7 @@ const Check = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: ${props => props.activeDisabled === true ? 0.7 : 1};
+    opacity: ${props => props.disabled === true ? "0.65" : "1"};
     ion-icon {
         font-size: 40px;
         color: #ffffff;
