@@ -28,7 +28,6 @@ export default function Habits(){
             .then(res => {
                 const valor = res.data;
                 setHabitos(valor);
-                console.log(valor);
                 if (res.data.length > 0){
                     setExibeTela(2);
                 } else if (res.data.length === 0){
@@ -54,7 +53,6 @@ export default function Habits(){
 
         axios.post(`${URL_base}/habits`, body, config)
             .then(res => {
-                console.log(res.data);
                 setExibeTela(2);
                 setNomeHabitoInput("");
                 setDias([]);
@@ -62,7 +60,7 @@ export default function Habits(){
                 setActiveDisabled(false);
             })
             .catch(err => {
-                console.log(err);
+                alert(err.response.data.message);
                 setActiveDisabled(false);
             });
     }

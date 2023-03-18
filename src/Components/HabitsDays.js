@@ -9,7 +9,7 @@ export default function HabitsDays( {dias, setDias, activeDisabled} ){
             function selecionarDias(){
                 if (!dias.includes(indice)){
                     const selecDias = [...dias, indice];
-                    setDias(selecDias)
+                    setDias(selecDias);
                 } else if (dias.includes(indice)){
                     const filterDias = dias.filter(d => d !== indice);
                     setDias(filterDias);
