@@ -4,16 +4,22 @@ import Habits from "./Pages/Habits";
 import Today from "./Pages/Today";
 import History from "./Pages/History";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {MyContext} from "./context/MyContext";
-import { useState } from "react";
+import {MyContext, HabitsContext} from "./context/MyContext";
+import { useEffect, useState } from "react";
 
 export default function App() {
 
   const [loginOk,setLoginOk] = useState([]);
+  const [progress,setProgress] = useState(0);
+
+  useEffect(() => {
+    console.log(progress)  
+  },[]);
 
   return (
     <BrowserRouter>
       <MyContext.Provider value={{loginOk,setLoginOk}}>
+      <HabitsContext.Provider value={{progress,setProgress}}>
         <Routes>
           <Route path="/" element={<LoginScreen />}/>
           <Route path="/cadastro" element={<RegisterScreen />}/>
@@ -21,6 +27,7 @@ export default function App() {
           <Route path="/hoje" element={<Today />}/>
           <Route path="/historico" element={<History />}/>
         </Routes>
+      </HabitsContext.Provider>
       </MyContext.Provider>
     </BrowserRouter>
   );

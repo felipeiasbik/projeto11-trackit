@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { CircularProgressbar } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { HabitsContext } from "../context/MyContext";
 
 export default function Footer(){
+
+    const {progress} = useContext(HabitsContext);
 
     return (
         <Bottom data-test="menu">
@@ -14,7 +18,7 @@ export default function Footer(){
             </Menu>
             <Center>
                 <Link to="/hoje">
-                    <CircularProgressbar data-test="menu" value="65" text="Hoje" styles={
+                    <CircularProgressbar data-test="menu" value={progress} text="Hoje" styles={
                     {
                     path:{stroke: "#ffffff"},
                     trail: 

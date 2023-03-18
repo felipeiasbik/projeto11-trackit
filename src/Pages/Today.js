@@ -4,18 +4,17 @@ import Footer from "../Components/Footer";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { URL_base } from "../Constants/URL_base";
-import {MyContext} from "../context/MyContext";
+import {HabitsContext, MyContext} from "../context/MyContext";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import TodayList from "../Components/TodayList";
 
 export default function Today(){
 
-
     const [rodar,setRodar] = useState(0);
     const [habitos,setHabitos] = useState([]);
     const {loginOk} = useContext(MyContext);
-
+    const {progress} = useContext(HabitsContext);
 
     useEffect(() => {
         
@@ -28,7 +27,6 @@ export default function Today(){
             .then (res => {
                 const valor = res.data;
                 setHabitos(valor)
-                console.log(res)
             })
             .catch (err => alert(err.response.data.message))
 
@@ -39,9 +37,9 @@ export default function Today(){
         <>
             <Header />
             <Container>
-                <DayDate>
+                <DayDate progress={progress}>
                     <h2 data-test="today">{(dayjs().locale("pt-br").format("dddd")[0].toUpperCase(0) + dayjs().locale("pt-br").format("dddd").substring(1)).replace("-feira","")}, {dayjs().format('DD/MM')}</h2>
-                    <p data-test="today-counter">Nenhum hábito concluído ainda</p>
+                    <p data-test="today-counter">{progress > 0 ? `${progress}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}</p>
                 </DayDate>
                 <TodayList habitos={habitos} rodar={rodar} setRodar={setRodar}/>
             </Container>
@@ -65,7 +63,7 @@ const DayDate = styled.div`
         line-height: 28px;
     }
     p {
-        color: #BABABA;
+        color: ${props => props.progress > 0 ? "#8FC549" : "#BABABA"};
         font-family: 'Lexend Deca', sans-serif;
         font-size: 18px;
         font-weight: 400;

@@ -1,21 +1,31 @@
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
-import { MyContext } from "../context/MyContext";
+import { useContext, useEffect } from "react";
+import { MyContext,HabitsContext } from "../context/MyContext";
 import { URL_base } from "../Constants/URL_base";
 import axios from "axios";
 
 export default function TodayList( {habitos, rodar, setRodar} ){
 
     const {loginOk} = useContext(MyContext);
+    const {progress, setProgress} = useContext(HabitsContext);
 
     console.log(habitos)
 
+    useEffect(() => {    
+        const valor1 = ((habitos.filter(v => v.done === true).length))
+        const valor2 = ((habitos.length))
+        let resultado = Math.floor(valor1/valor2*100)
+        setProgress(resultado);
+    });
 
     return (
+
         habitos.map( hab => {
 
             function checkHabito(){
+
                 if (hab.done === false){
+
                     const token = loginOk.token;
                     const body = {};
                     const config = {
@@ -33,6 +43,7 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         })
 
                 } else if (hab.done === true) {
+
                     const token = loginOk.token;
                     const body = {};
                     const config = {
@@ -55,8 +66,8 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                 <HabitToday key={hab.id} data-test="today-habit-container">
                     <Texts>
                         <h2 data-test="today-habit-name" >{hab.name}</h2>
-                        <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
-                        <p data-test="today-habit-record">Seu recorde: 5 dias</p>         
+                        <p data-test="today-habit-sequence">Sequência atual: <SequenciaSpan currentSequence={hab.currentSequence} >{hab.currentSequence} {hab.currentSequence > 1 ? "dias" :  hab.currentSequence === 0 ? "" : "dia"}</SequenciaSpan></p>
+                        <p data-test="today-habit-record">Seu recorde: <SequenciaRecordeSpan currentSequence={hab.currentSequence} highestSequence={hab.highestSequence}>{hab.highestSequence} {hab.highestSequence > 1 ? "dias" : hab.highestSequence === 0 ? "" : "dia"}</SequenciaRecordeSpan></p>         
                     </Texts>
                     <Check cor={hab.done} onClick={() => checkHabito()} data-test="today-habit-check-btn">
                         <ion-icon name="checkmark"></ion-icon>
@@ -108,4 +119,10 @@ const Check = styled.button`
         color: #ffffff;
         --ionicon-stroke-width: 80px;
     }
+`
+const SequenciaSpan = styled.span`
+    color: ${props => props.currentSequence > 0 ? "#8FC549" : "#666666"}
+`
+const SequenciaRecordeSpan = styled.span`
+    color: ${props => props.currentSequence > 0 && props.currentSequence >= props.highestSequence ? "#8FC549" : "#666666"}
 `
