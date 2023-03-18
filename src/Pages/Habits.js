@@ -38,14 +38,17 @@ export default function Habits(){
                 alert(err.response.data.message);
             })
     },[rodar]);
-
     function postHabit(e){
 
         e.preventDefault();
         
         if(nomeHabitoInput === ""){
 
-            alert("Erro: Coloque um nome para o hábito")
+            alert("Coloque um nome para o hábito.")
+
+        } else if (dias.length === 0) {
+
+            alert("Selecione ao menos um dia da semana para realizar o hábito.")
 
         } else {
 

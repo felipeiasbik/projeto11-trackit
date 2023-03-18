@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext,HabitsContext } from "../context/MyContext";
 import { URL_base } from "../Constants/URL_base";
 import axios from "axios";
+import Loading from "../Constants/Loading";
 
 export default function TodayList( {habitos, rodar, setRodar} ){
 
+    const [habAtual,setHabAtual] = useState("");
+    const [activeDisabled,setActiveDisabled] = useState(false);
     const {loginOk} = useContext(MyContext);
     const {progress, setProgress} = useContext(HabitsContext);
 
@@ -24,6 +27,12 @@ export default function TodayList( {habitos, rodar, setRodar} ){
 
             function checkHabito(){
 
+                setHabAtual(hab.id);
+
+                if(activeDisabled === false){
+                    setActiveDisabled(true);
+                }
+
                 if (hab.done === false){
 
                     const token = loginOk.token;
@@ -37,9 +46,12 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         .then (res => {
                             console.log(res.data);
                             setRodar(rodar + 1);
+                            setActiveDisabled(false);
+                            setHabAtual("");
                         })
                         .catch(err => {
                             alert(err.response.data.message)
+                            setActiveDisabled(false);
                         })
 
                 } else if (hab.done === true) {
@@ -55,6 +67,8 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         .then (res => {
                             console.log(res.data);
                             setRodar(rodar + 1);
+                            setActiveDisabled(false);
+                            setHabAtual("");
                         })
                         .catch(err => {
                             alert(err.response.data.message)
@@ -69,8 +83,9 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                         <p data-test="today-habit-sequence">Sequência atual: <SequenciaSpan currentSequence={hab.currentSequence} >{hab.currentSequence} {hab.currentSequence > 1 ? "dias" :  hab.currentSequence === 0 ? "" : "dia"}</SequenciaSpan></p>
                         <p data-test="today-habit-record">Seu recorde: <SequenciaRecordeSpan currentSequence={hab.currentSequence} highestSequence={hab.highestSequence}>{hab.highestSequence} {hab.highestSequence > 1 ? "dias" : hab.highestSequence === 0 ? "" : "dia"}</SequenciaRecordeSpan></p>         
                     </Texts>
-                    <Check cor={hab.done} onClick={() => checkHabito()} data-test="today-habit-check-btn">
-                        <ion-icon name="checkmark"></ion-icon>
+                    <Check disabled={activeDisabled} cor={hab.done} onClick={() => checkHabito()} data-test="today-habit-check-btn">
+                        {activeDisabled === true && hab.id === habAtual ? <Loading /> : <ion-icon name="checkmark"></ion-icon>}
+                        
                     </Check>
                 </HabitToday>
             )
@@ -114,6 +129,7 @@ const Check = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: ${props => props.activeDisabled === true ? 0.7 : 1};
     ion-icon {
         font-size: 40px;
         color: #ffffff;
