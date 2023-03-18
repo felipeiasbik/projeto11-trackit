@@ -43,26 +43,35 @@ export default function Habits(){
 
         e.preventDefault();
         
-        setActiveDisabled(true);
+        if(nomeHabitoInput === ""){
 
-        const token = loginOk.token;
-        const body = {name: nomeHabitoInput, days: dias};
-        const config = {
-            headers: {Authorization: `Bearer ${token}`}
+            alert("Erro: Coloque um nome para o hábito")
+
+        } else {
+
+            setActiveDisabled(true);
+
+            const token = loginOk.token;
+            const body = {name: nomeHabitoInput, days: dias};
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            }
+    
+            axios.post(`${URL_base}/habits`, body, config)
+                .then(res => {
+                    setExibeTela(2);
+                    setNomeHabitoInput("");
+                    setDias([]);
+                    setRodar(rodar+1);
+                    setActiveDisabled(false);
+                })
+                .catch(err => {
+                    alert(err.response.data.message);
+                    setActiveDisabled(false);
+                });
+
         }
 
-        axios.post(`${URL_base}/habits`, body, config)
-            .then(res => {
-                setExibeTela(2);
-                setNomeHabitoInput("");
-                setDias([]);
-                setRodar(rodar+1);
-                setActiveDisabled(false);
-            })
-            .catch(err => {
-                alert(err.response.data.message);
-                setActiveDisabled(false);
-            });
     }
 
     return (
@@ -73,7 +82,7 @@ export default function Habits(){
                 <CriaHabito exibeTela={exibeTela} data-test="habit-create-container">
                     <FrameAddHabit>
                         <form onSubmit={postHabit}>
-                            <input disabled={activeDisabled} data-test="habit-name-input" type="text" placeholder="nome do hábito" value={nomeHabitoInput} onChange={e => setNomeHabitoInput(e.target.value)} required/>
+                            <input disabled={activeDisabled} data-test="habit-name-input" type="text" placeholder="nome do hábito" value={nomeHabitoInput} onChange={e => setNomeHabitoInput(e.target.value)}/>
                             <Dias>
                                 <HabitsDays dias={dias} setDias={setDias} activeDisabled={activeDisabled}/>
                             </Dias>
@@ -95,7 +104,7 @@ export default function Habits(){
                         </form>
                     </FrameAddHabit>
                 </CriaHabito>
-                <MostraHabito exibeTela={exibeTela} data-test="habit-container">
+                <MostraHabito exibeTela={exibeTela} >
                     <DisplayHabits habitos={habitos} rodar={rodar} setRodar={setRodar}/>                    
                 </MostraHabito>
                 <MensagemHabito exibeTela={exibeTela}>

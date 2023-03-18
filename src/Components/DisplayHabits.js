@@ -29,9 +29,9 @@ export default function DisplayHabits( {habitos, rodar, setRodar} ){
 
     return (
         habitos.map((hab) => 
-        <FrameFixed key={hab.id}>
+        <FrameFixed key={hab.id} data-test="habit-container">
             <p data-test="habit-name">{hab.name}</p>
-            <ion-icon name="trash-outline" data-test="habit-delete-btn" onClick={() => deleteHabit(hab.id)}></ion-icon>
+            <IconTrash data-test="habit-delete-btn" ><ion-icon name="trash-outline" onClick={() => deleteHabit(hab.id)}></ion-icon></IconTrash>
             <Dias>
             {DiasSemana.map( (dia, ind) => <ButtonDay key={ind} cor={hab.days.includes(ind) ? true : false} data-test="habit-day" type="button" disabled>{dia}</ButtonDay>)}
             </Dias>
@@ -60,13 +60,14 @@ const FrameFixed = styled.div`
         font-weight: 400;
         line-height: 25px;
     }
-    ion-icon {
-        font-size:20px;
-        color: #666666;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-    }
+`
+const IconTrash = styled.div`
+    font-size:20px;
+    color: #666666;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
 `
 const ButtonDay = styled.button`
     background-color: ${props => props.cor === false ? "#ffffff" : "#cfcfcf"};
