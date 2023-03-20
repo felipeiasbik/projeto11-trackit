@@ -12,8 +12,6 @@ export default function TodayList( {habitos, rodar, setRodar} ){
     const {loginOk} = useContext(MyContext);
     const {setProgress} = useContext(HabitsContext);
 
-    console.log(habitos)
-
     useEffect(() => {    
         const valor1 = ((habitos.filter(v => v.done === true).length))
         const valor2 = ((habitos.length))
@@ -41,7 +39,6 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                     axios
                         .post(`${URL_base}/habits/${hab.id}/check`, body, config)
                         .then (res => {
-                            console.log(res.data);
                             setActiveDisabled(false);
                             setHabAtual([]);
                             setRodar(rodar + 1);
@@ -62,7 +59,6 @@ export default function TodayList( {habitos, rodar, setRodar} ){
                     axios
                         .post(`${URL_base}/habits/${hab.id}/uncheck`, body, config)
                         .then (res => {
-                            console.log(res.data);
                             setTimeout(setActiveDisabled(false), 5000);
                             setHabAtual([]);
                             setRodar(rodar + 1);

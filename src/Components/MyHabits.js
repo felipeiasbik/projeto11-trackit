@@ -14,10 +14,24 @@ export default function MyHabits( {setExibeTela, habitos} ){
     return (
         <MyHabitsDiv>
             <p>Meus hábitos</p>
-            <button onClick={() => exibeCriaHabito()} data-test="habit-create-btn">+</button>
+            <ButtonPlus onClick={() => exibeCriaHabito()} data-test="habit-create-btn">+</ButtonPlus>
         </MyHabitsDiv>
     )
 }
+
+const ButtonPlus = styled.button`
+    width: 100%;
+    height: 45px;
+    background-color: #52B6FF;
+    border-radius: 5px;
+    border: 0;
+    color: #ffffff;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 26px;
+    box-sizing: border-box;
+`
 const MyHabitsDiv = styled.div`
     width: 100%;
     display: flex;

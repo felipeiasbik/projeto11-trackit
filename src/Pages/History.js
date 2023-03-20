@@ -3,10 +3,11 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
 export default function History(){
+   
     return (
         <Container>
             <Header />
-            <h2>History</h2>
+            <h2>Histórico</h2>
             <InterArea>
                 Em breve você poderá ver o histórico dos seus hábitos aqui!
             </InterArea>
@@ -29,6 +30,8 @@ const Container = styled.div`
 `
 const InterArea = styled.div`
     width: 100%;
+    display: flex;
+    justify-content: center;
     color: #666666;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 18px;

@@ -18,7 +18,7 @@ export default function Footer(){
             </Menu>
             <Center>
                 <Link to="/hoje">
-                    <CircularProgressbar data-test="menu" value={progress} text="Hoje" styles={
+                    <CircularProgressbar data-test="menu" value={progress > 0 ? progress : 0} text="Hoje" styles={
                     {
                     path:{stroke: "#ffffff"},
                     trail: 

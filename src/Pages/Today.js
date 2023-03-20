@@ -15,11 +15,12 @@ export default function Today(){
     const [habitos,setHabitos] = useState([]);
     const {loginOk} = useContext(MyContext);
     const {progress} = useContext(HabitsContext);
-
+    
     useEffect(() => {
+        const token = loginOk.token;
         
         const config = {
-            headers: {Authorization: `Bearer ${loginOk.token}`}
+            headers: {Authorization: `Bearer ${token}`}
         }
 
         axios

@@ -18,6 +18,7 @@ export default function LoginScreen(){
 
     function loginUser(e){
         e.preventDefault();
+
         setActiveDisabled(true);
 
         const body = { email: emailInput, password: passInput};
@@ -26,15 +27,12 @@ export default function LoginScreen(){
             .then(res => {
                 setLoginOk(res.data);
                 navigate("/hoje");
-                console.log(res)
-                console.log(body)
             })
             .catch(err => {
                 setActiveDisabled(false);
                 alert(`Erro: ${err.response.data.message}`)
-                console.log(err)
-                console.log(body)
             })
+        
     }
 
     return (
@@ -92,5 +90,16 @@ const ContainerInt = styled.div`
     }
 `
 const ButtonSubmit = styled.button`
+    width: 100%;
+    height: 45px;
+    background-color: #52B6FF;
+    border-radius: 5px;
+    border: 0;
+    color: #ffffff;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 26px;
+    box-sizing: border-box;
     opacity: ${props => props.disabled === false ? 1 : 0.7 };
 `

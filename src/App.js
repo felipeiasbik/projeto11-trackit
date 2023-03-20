@@ -5,16 +5,12 @@ import Today from "./Pages/Today";
 import History from "./Pages/History";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {MyContext, HabitsContext} from "./context/MyContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function App() {
 
   const [loginOk,setLoginOk] = useState([]);
   const [progress,setProgress] = useState(0);
-
-  useEffect(() => {
-    console.log(progress)  
-  },[]);
 
   return (
     <BrowserRouter>

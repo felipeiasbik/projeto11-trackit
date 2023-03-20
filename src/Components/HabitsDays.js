@@ -32,6 +32,7 @@ export default function HabitsDays( {dias, setDias, activeDisabled} ){
 }
 
 const ButtonDay = styled.button`
+    border-radius: 5px;
     background-color: ${props => props.cor === false ? "#ffffff" : "#cfcfcf"};
     border: 1px solid #D4D4D4;
     width: 30px;

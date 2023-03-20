@@ -7,7 +7,7 @@ import {MyContext} from "../context/MyContext";
 
 export default function DisplayHabits( {habitos, rodar, setRodar} ){
 
-    const {loginOk} = useContext(MyContext);    
+    const {loginOk} = useContext(MyContext); 
 
     function deleteHabit(id){
 
@@ -69,7 +69,8 @@ const IconTrash = styled.div`
     top: 10px;
     z-index: 1;
 `
-const ButtonDay = styled.button`
+const ButtonDay = styled.button`   
+    border-radius: 5px;
     background-color: ${props => props.cor === false ? "#ffffff" : "#cfcfcf"};
     border: 1px solid #D4D4D4;
     width: 30px;
